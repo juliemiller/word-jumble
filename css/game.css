@@ -1,0 +1,28 @@
+#game {
+	margin: 0 auto;
+	width: 500px;
+}
+
+ul {
+	list-style: none;
+	width: 150px;
+	margin: 0px;
+	padding: 0px;
+}
+
+li {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border: 1px solid black;
+	float: left;
+	text-align: center;
+	line-height: 25px;
+	/*box-sizing: border-box;*/
+}
+
+.selected {
+	background-color: blue;
+}
