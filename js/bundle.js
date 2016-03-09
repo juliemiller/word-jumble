@@ -287,9 +287,7 @@
 				console.log(this.round.currentWord);
 			} else {
 				$(".messages").text("You can only use each tile once in a word.");
-				console.log(this.round.currentWord);
 				this.round.currentWord = "";
-				console.log(this.round.currentWord);
 				this.endWord();
 			}
 		}
