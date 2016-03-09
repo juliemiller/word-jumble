@@ -70,7 +70,7 @@ Board.prototype.startWord = function(e) {
 
 Board.prototype.endWord = function(e) {
 	this.round.endWord();
-	$(".square").removeClass("selected")
+	$(".square").removeClass("selected");
 }
 
 Board.prototype.addLetters = function(e) {
@@ -84,7 +84,11 @@ Board.prototype.addLetters = function(e) {
 			this.round.currentWordPositions.push(letterLocation);
 			console.log(this.round.currentWord);
 		} else {
-			console.log("ALREADY CLICKED THERE")
+			$(".messages").text("You can only use each tile once in a word.");
+			console.log(this.round.currentWord);
+			this.round.currentWord = "";
+			console.log(this.round.currentWord);
+			this.endWord();
 		}
 	}
 }

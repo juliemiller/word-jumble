@@ -86,8 +86,8 @@
 	
 		if(this.timer.timing === false) {
 			this.round.reset();
-			$(".messages").text("");
 		}
+		
 		this.timer.toggleButton();
 		$("li").addClass("playing");
 		console.log("add playing class");
@@ -272,7 +272,7 @@
 	
 	Board.prototype.endWord = function(e) {
 		this.round.endWord();
-		$(".square").removeClass("selected")
+		$(".square").removeClass("selected");
 	}
 	
 	Board.prototype.addLetters = function(e) {
@@ -286,7 +286,11 @@
 				this.round.currentWordPositions.push(letterLocation);
 				console.log(this.round.currentWord);
 			} else {
-				console.log("ALREADY CLICKED THERE")
+				$(".messages").text("You can only use each tile once in a word.");
+				console.log(this.round.currentWord);
+				this.round.currentWord = "";
+				console.log(this.round.currentWord);
+				this.endWord();
 			}
 		}
 	}
@@ -322,7 +326,8 @@
 	
 	Round.prototype.endWord = function() {
 		this.makingWord = false;
-		if (this.currentWord.length < 3) {
+		if (this.currentWord.length === 0) {
+		} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
 			$('.messages').text("Words must be at least 3 letters")
 		} else if (Word_List.isInList(this.currentWord)) {
 			if (this.words.indexOf(this.currentWord) === -1) {
@@ -363,9 +368,11 @@
 	
 	Round.prototype.reset = function() {
 		this.words = [];
+		this.currentWord = "";
 		$(".list").empty();
 		$(".list").remove();
 		this.displayWords();
+		$(".messages").text("");
 	}
 	
 	module.exports = Round;

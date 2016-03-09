@@ -27,8 +27,8 @@ Game.prototype.toggleGame = function(e) {
 
 	if(this.timer.timing === false) {
 		this.round.reset();
-		$(".messages").text("");
 	}
+	
 	this.timer.toggleButton();
 	$("li").addClass("playing");
 	console.log("add playing class");

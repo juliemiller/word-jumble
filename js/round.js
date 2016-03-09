@@ -22,7 +22,8 @@ Round.prototype.displayWords = function() {
 
 Round.prototype.endWord = function() {
 	this.makingWord = false;
-	if (this.currentWord.length < 3) {
+	if (this.currentWord.length === 0) {
+	} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
 		$('.messages').text("Words must be at least 3 letters")
 	} else if (Word_List.isInList(this.currentWord)) {
 		if (this.words.indexOf(this.currentWord) === -1) {
@@ -63,9 +64,11 @@ Round.prototype.calculateScore = function() {
 
 Round.prototype.reset = function() {
 	this.words = [];
+	this.currentWord = "";
 	$(".list").empty();
 	$(".list").remove();
 	this.displayWords();
+	$(".messages").text("");
 }
 
 module.exports = Round;
