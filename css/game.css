@@ -1,28 +1,75 @@
+h1 {
+	text-align: center;
+}
+
+.outerBar {
+	width: 100%;
+}
+
+#navbar {
+	margin: 10px auto;
+	max-width: 200px;
+	display: flex;
+	justify-content: space-between;
+}
+
 #game {
+	flex-wrap: wrap;
 	margin: 0 auto;
-	width: 500px;
+	display: flex;
+	justify-content: center;
 }
 
-ul {
+.row {
 	list-style: none;
-	width: 150px;
-	margin: 0px;
+	width: 220px;
+	height: 220px;
 	padding: 0px;
+	margin-left: 10px;
 }
 
-li {
+.square {
 	float: left;
-	width: 25px;
-	height: 25px;
+	width: 45px;
+	height: 45px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	border: 1px solid black;
 	float: left;
 	text-align: center;
-	line-height: 25px;
-	/*box-sizing: border-box;*/
+	line-height: 45px;
+	box-sizing: border-box;
+	font-size: 30px;
+}
+
+.square:hover {
+	background-color: blue;
 }
 
 .selected {
 	background-color: blue;
+}
+
+.sideBox {
+	border: 1px solid black;
+	width: 150px;
+	margin: 10px;
+}
+
+.sideBox ul {
+	list-style: none;
+	margin-top: 5px;
+	padding-top: 0px;
+	padding-left: 5px;
+}
+
+.sideBox h4 {
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid black;
+}
+
+.runningOutOfTime {
+	color: red;
 }

@@ -1,8 +1,7 @@
-var Board = require("./board.js");
-var Round = require('./round.js');
+var Game = require('./game.js');
 
 $(function() {
+	var $board = $("#board");
 	var $game = $("#game");
-	var round = new Round();
-	new Board($game, round);
+	new Game($game);
 });

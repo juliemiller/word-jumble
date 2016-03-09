@@ -3,12 +3,25 @@
 <head>
 	<title></title>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="src/wordList.min.js"></script>
+	<script src="src/wordBank.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/game.css">
+	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,700,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<h1>GAME!</h1>
-	
-	<div id="game"></div>
+	<h1>Word Jumble</h1>
+	<div id="game">
+		<div class="outerBar">
+			<div id ="navbar"></div>
+		</div>
+		<div id="highScores" class="sideBox">
+			<h4>High Scores</h4>
+		</div>
+		<div id="board"></div>
+		<div id ="words" class="sideBox">
+			<h4>Guessed Words</h4>
+		</div>
+	</div>
 	<script type="text/javascript" src="./js/bundle.js"></script>
 </body>
 </html>
