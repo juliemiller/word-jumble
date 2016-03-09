@@ -1,17 +1,12 @@
 
-function Round($el, timer) {
+function Round($el) {
 	this.currentWord = "";
 	this.currentWordPositions = [];
 	this.makingWord = false;
 	this.words = [];
 	this.$el = $el;
-	this.timer = timer;
 
 	this.displayWords();
-}
-
-Round.prototype.endRound = function() {
-
 }
 
 Round.prototype.startWord = function() {
@@ -66,5 +61,9 @@ Round.prototype.calculateScore = function() {
 
 Round.prototype.reset = function() {
 	this.words = [];
+	$(".list").empty();
+	$(".list").remove();
+	this.displayWords();
 }
+
 module.exports = Round;

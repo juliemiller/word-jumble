@@ -27,7 +27,7 @@ Timer.prototype.stop = function() {
 	this.gameOverCallback();
 	clearInterval(this.interval);
 	$(".timer").removeClass("runningOutOfTime")
-	this.seconds = 60;
+	this.seconds = 10;
 	$('.startButton').text("Start")
 	this.updateTimer();
 }

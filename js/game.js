@@ -24,7 +24,12 @@ Game.prototype.bindEvents = function() {
 
 Game.prototype.toggleGame = function(e) {
 	e.preventDefault();
+
+	if(this.timer.timing === false) {
+		this.round.reset();
+	}
 	this.timer.toggleButton();
+
 	this.board.createGrid();
 	this.bindEvents();
 }
