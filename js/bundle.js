@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Game = __webpack_require__(6);
+	var Game = __webpack_require__(1);
 	
 	$(function() {
 		var $board = $("#board");
@@ -55,6 +55,149 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Timer = __webpack_require__(2);
+	var Board = __webpack_require__(3);
+	var Round = __webpack_require__(4);
+	
+	var Game = function($el) {
+		this.$el = $el;
+		var $timer = $("#navbar");
+		var $board = $("#board");
+		var $wordList = $("#words");
+	
+		this.round = new Round($wordList);
+		this.timer = new Timer($timer, this.gameOver.bind(this));
+		this.board = new Board($board, this.round)
+	
+		this.$el.on("click", ".startButton", this.toggleGame.bind(this));
+	}
+	
+	Game.prototype.bindEvents = function() {
+		this.$el.on("mousedown", ".square", this.startWord.bind(this));
+		this.$el.on("mouseup", ".square", this.endWord.bind(this));
+		this.$el.on("mouseenter", ".square", this.addLetters.bind(this));
+		this.$el.on("mouseleave", ".row", this.endWord.bind(this));
+	}
+	
+	Game.prototype.toggleGame = function(e) {
+		e.preventDefault();
+	
+		if(this.timer.timing === false) {
+			this.round.reset();
+			$(".messages").text("");
+		}
+		this.timer.toggleButton();
+		$("li").addClass("playing");
+		console.log("add playing class");
+		this.board.createGrid();
+		this.bindEvents();
+	}
+	
+	Game.prototype.startWord = function(e) {
+		e.preventDefault();
+		this.board.startWord(e);
+		$(".messages").text("")
+	}
+	
+	Game.prototype.endWord = function(e) {
+		e.preventDefault();
+		this.board.endWord();
+	}
+	
+	Game.prototype.addLetters = function(e) {
+		e.preventDefault();
+		this.board.addLetters(e);
+	}
+	
+	Game.prototype.gameOver = function() {
+		this.unbindEvents();
+		var score = "Total Points: " + this.round.calculateScore();
+		$(".messages").text(score)
+	}
+	
+	Game.prototype.unbindEvents = function() {
+		this.$el.off("mousedown", ".square");
+		this.$el.off("mouseup", ".square");
+		this.$el.off("mouseenter", ".square");
+		this.$el.off("mouseleave", ".row");
+	}
+	
+	module.exports = Game;
+	
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	var Timer= function($el, gameOverCallback) {
+		this.gameOverCallback = gameOverCallback;
+		this.seconds = 10;
+		this.$el = $el;
+		this.timing = false;
+	
+		this.display();
+	}
+	
+	Timer.prototype.display = function() {
+		startButton = "<button>Start</button>"
+		timer = "<span>" + this.seconds +"</span>"
+		var $timer = $(timer).addClass("timer");
+		var $button = $(startButton).addClass("startButton");
+		this.$el.append($timer);
+		this.$el.append($button);
+	}
+	
+	Timer.prototype.start = function() {
+		this.timing = true;
+		this.interval = setInterval(this.tick.bind(this), 1000)
+		$('.startButton').text("Reset")
+	}
+	
+	Timer.prototype.stop = function() {
+		this.timing = false;
+		this.gameOverCallback();
+		clearInterval(this.interval);
+		$(".timer").removeClass("runningOutOfTime")
+		this.seconds = 10;
+		$('.startButton').text("Start")
+		this.updateTimer();
+	}
+	
+	Timer.prototype.tick = function() {
+		this.decrementSeconds();
+		if (this.seconds === 10) {
+			$(".timer").addClass("runningOutOfTime")
+		} else if (this.seconds === 0) {
+			this.stop();
+		}
+		this.updateTimer();
+	}
+	
+	Timer.prototype.updateTimer = function() {
+		var $timer = $(".timer");
+		$timer.text(this.seconds);
+	}
+	
+	Timer.prototype.toggleButton = function() {
+		if (this.timing) {
+			this.stop();
+		} else {
+			console.log("TIMING");
+			this.start();
+		}
+	}
+	
+	Timer.prototype.decrementSeconds = function() {
+		this.seconds -= 1;
+	}
+	
+	module.exports = Timer;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	var frequencies = { 
@@ -152,7 +295,7 @@
 	module.exports = Board;
 
 /***/ },
-/* 2 */
+/* 4 */
 /***/ function(module, exports) {
 
 	
@@ -180,16 +323,18 @@
 	Round.prototype.endWord = function() {
 		this.makingWord = false;
 		if (this.currentWord.length < 3) {
-	
+			$('.messages').text("Words must be at least 3 letters")
 		} else if (Word_List.isInList(this.currentWord)) {
 			if (this.words.indexOf(this.currentWord) === -1) {
 				this.words.push(this.currentWord);
 				$list = $(".list");
 				var $word = "<li>" + this.currentWord + "</li>";
 				$list.append($word);
+			} else {
+				$('.messages').text("You already found that word!")
 			}	
 		} else {
-			console.log("NOT A WORD");
+			$(".messages").text("Word not in dictionary");
 		}
 	}
 	
@@ -224,148 +369,6 @@
 	}
 	
 	module.exports = Round;
-
-/***/ },
-/* 3 */,
-/* 4 */,
-/* 5 */
-/***/ function(module, exports) {
-
-	var Timer= function($el, gameOverCallback) {
-		this.gameOverCallback = gameOverCallback;
-		this.seconds = 10;
-		this.$el = $el;
-		this.timing = false;
-	
-		this.display();
-	}
-	
-	Timer.prototype.display = function() {
-		startButton = "<button>Start</button>"
-		timer = "<span>" + this.seconds +"</span>"
-		var $timer = $(timer).addClass("timer");
-		var $button = $(startButton).addClass("startButton");
-		this.$el.append($timer);
-		this.$el.append($button);
-	}
-	
-	Timer.prototype.start = function() {
-		this.timing = true;
-		this.interval = setInterval(this.tick.bind(this), 1000)
-		$('.startButton').text("Reset")
-	}
-	
-	Timer.prototype.stop = function() {
-		this.timing = false;
-		this.gameOverCallback();
-		clearInterval(this.interval);
-		$(".timer").removeClass("runningOutOfTime")
-		this.seconds = 10;
-		$('.startButton').text("Start")
-		this.updateTimer();
-	}
-	
-	Timer.prototype.tick = function() {
-		this.decrementSeconds();
-		if (this.seconds === 10) {
-			$(".timer").addClass("runningOutOfTime")
-		} else if (this.seconds === 0) {
-			this.stop();
-		}
-		this.updateTimer();
-	}
-	
-	Timer.prototype.updateTimer = function() {
-		var $timer = $(".timer");
-		$timer.text(this.seconds);
-	}
-	
-	Timer.prototype.toggleButton = function() {
-		if (this.timing) {
-			this.stop();
-		} else {
-			console.log("TIMING");
-			this.start();
-		}
-	}
-	
-	Timer.prototype.decrementSeconds = function() {
-		this.seconds -= 1;
-	}
-	
-	module.exports = Timer;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Timer = __webpack_require__(5);
-	var Board = __webpack_require__(1);
-	var Round = __webpack_require__(2);
-	
-	var Game = function($el) {
-		this.$el = $el;
-		var $timer = $("#navbar");
-		var $board = $("#board");
-		var $wordList = $("#words");
-	
-		this.round = new Round($wordList);
-		this.timer = new Timer($timer, this.gameOver.bind(this));
-		this.board = new Board($board, this.round)
-	
-		this.$el.on("click", ".startButton", this.toggleGame.bind(this));
-	}
-	
-	Game.prototype.bindEvents = function() {
-		this.$el.on("mousedown", ".square", this.startWord.bind(this));
-		this.$el.on("mouseup", ".square", this.endWord.bind(this));
-		this.$el.on("mouseenter", ".square", this.addLetters.bind(this));
-		this.$el.on("mouseleave", ".row", this.endWord.bind(this));
-	}
-	
-	Game.prototype.toggleGame = function(e) {
-		e.preventDefault();
-	
-		if(this.timer.timing === false) {
-			this.round.reset();
-		}
-		this.timer.toggleButton();
-	
-		this.board.createGrid();
-		this.bindEvents();
-	}
-	
-	Game.prototype.startWord = function(e) {
-		e.preventDefault();
-		this.board.startWord(e);
-	}
-	
-	Game.prototype.endWord = function(e) {
-		e.preventDefault();
-		this.board.endWord();
-	}
-	
-	Game.prototype.addLetters = function(e) {
-		e.preventDefault();
-		this.board.addLetters(e);
-	}
-	
-	Game.prototype.gameOver = function() {
-		this.unbindEvents();
-		var score = this.round.calculateScore();
-		console.log(score);
-	}
-	
-	Game.prototype.unbindEvents = function() {
-		this.$el.off("mousedown", ".square");
-		this.$el.off("mouseup", ".square");
-		this.$el.off("mouseenter", ".square");
-		this.$el.off("mouseleave", ".row");
-	}
-	
-	module.exports = Game;
-	
-
 
 /***/ }
 /******/ ]);

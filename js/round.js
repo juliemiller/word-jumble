@@ -23,16 +23,18 @@ Round.prototype.displayWords = function() {
 Round.prototype.endWord = function() {
 	this.makingWord = false;
 	if (this.currentWord.length < 3) {
-
+		$('.messages').text("Words must be at least 3 letters")
 	} else if (Word_List.isInList(this.currentWord)) {
 		if (this.words.indexOf(this.currentWord) === -1) {
 			this.words.push(this.currentWord);
 			$list = $(".list");
 			var $word = "<li>" + this.currentWord + "</li>";
 			$list.append($word);
+		} else {
+			$('.messages').text("You already found that word!")
 		}	
 	} else {
-		console.log("NOT A WORD");
+		$(".messages").text("Word not in dictionary");
 	}
 }
 

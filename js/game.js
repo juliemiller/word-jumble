@@ -27,9 +27,11 @@ Game.prototype.toggleGame = function(e) {
 
 	if(this.timer.timing === false) {
 		this.round.reset();
+		$(".messages").text("");
 	}
 	this.timer.toggleButton();
-
+	$("li").addClass("playing");
+	console.log("add playing class");
 	this.board.createGrid();
 	this.bindEvents();
 }
@@ -37,6 +39,7 @@ Game.prototype.toggleGame = function(e) {
 Game.prototype.startWord = function(e) {
 	e.preventDefault();
 	this.board.startWord(e);
+	$(".messages").text("")
 }
 
 Game.prototype.endWord = function(e) {
@@ -51,8 +54,8 @@ Game.prototype.addLetters = function(e) {
 
 Game.prototype.gameOver = function() {
 	this.unbindEvents();
-	var score = this.round.calculateScore();
-	console.log(score);
+	var score = "Total Points: " + this.round.calculateScore();
+	$(".messages").text(score)
 }
 
 Game.prototype.unbindEvents = function() {
