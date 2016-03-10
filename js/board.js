@@ -39,6 +39,7 @@ var Board = function($el, round) {
 	this.$el = $el;
 	this.round = round;
 	this.createGrid();
+	this.gridLetters = {};
 };
 
 Board.prototype.createGrid = function() {
@@ -48,6 +49,7 @@ Board.prototype.createGrid = function() {
 	for (var i = 0; i < 4; i ++) {
 		for (var j = 0; j < 4; j ++) {
 			var idx = Math.round(Math.random() * 990);
+			
 			var li = "<li>" + alphabet[idx] + "</li>";
 			var $square = $(li).addClass("square").data("pos", [i, j]);
 			$row.append($square);
@@ -73,7 +75,6 @@ Board.prototype.addLetters = function(e) {
 		$sq.addClass("selected");
 		var currentX = letterLocation[0];
 		var currentY = letterLocation[1];
-		console.log(this.round.currentWordPositions);
 		if (this.round.currentWordPositions.length > 0) {
 			var lastX = this.round.currentWordPositions[this.round.currentWord.length-1][0];
 			var lastY = this.round.currentWordPositions[this.round.currentWord.length-1][1];
@@ -91,6 +92,7 @@ Board.prototype.addLetters = function(e) {
 			this.endWord();
 		}
 	}
+
 }
 
 
