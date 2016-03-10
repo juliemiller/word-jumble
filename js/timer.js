@@ -1,6 +1,6 @@
 var Timer= function($el, gameOverCallback) {
 	this.gameOverCallback = gameOverCallback;
-	this.seconds = 10;
+	this.seconds = 60;
 	this.$el = $el;
 	this.timing = false;
 
@@ -27,7 +27,7 @@ Timer.prototype.stop = function() {
 	this.gameOverCallback();
 	clearInterval(this.interval);
 	$(".timer").removeClass("runningOutOfTime")
-	this.seconds = 10;
+	this.seconds = 60;
 	$('.startButton').text("Start")
 	this.updateTimer();
 }
@@ -51,7 +51,6 @@ Timer.prototype.toggleButton = function() {
 	if (this.timing) {
 		this.stop();
 	} else {
-		console.log("TIMING");
 		this.start();
 	}
 }

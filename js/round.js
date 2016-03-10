@@ -58,7 +58,6 @@ Round.prototype.calculateScore = function() {
 			points += 11;
 		}
 	})
-	console.log(points);
 	return points;
 }
 

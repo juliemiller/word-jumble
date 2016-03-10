@@ -53,14 +53,7 @@ Board.prototype.createGrid = function() {
 			$row.append($square);
 		}
 	}
-	this.$el.append($row);		
-}
-
-Board.prototype.bindEvents = function() {
-	this.$el.on("mousedown", ".square", this.startWord.bind(this));
-	this.$el.on("mouseup", ".square", this.endWord.bind(this));
-	this.$el.on("mouseenter", ".square", this.addLetters.bind(this));
-	this.$el.on("mouseleave", ".row", this.endWord.bind(this));
+	this.$el.append($row);
 }
 
 Board.prototype.startWord = function(e) {
@@ -68,7 +61,7 @@ Board.prototype.startWord = function(e) {
 	this.addLetters(e);
 }
 
-Board.prototype.endWord = function(e) {
+Board.prototype.endWord = function() {
 	this.round.endWord();
 	$(".square").removeClass("selected");
 }
@@ -78,11 +71,20 @@ Board.prototype.addLetters = function(e) {
 		var $sq = $(e.currentTarget)
 		var letterLocation = $sq.data("pos");
 		$sq.addClass("selected");
+		var currentX = letterLocation[0];
+		var currentY = letterLocation[1];
 		console.log(this.round.currentWordPositions);
-		if (this.round.currentWordPositions.indexOf(letterLocation) === -1) {
+		if (this.round.currentWordPositions.length > 0) {
+			var lastX = this.round.currentWordPositions[this.round.currentWord.length-1][0];
+			var lastY = this.round.currentWordPositions[this.round.currentWord.length-1][1];
+		}
+		if (this.round.currentWordPositions.length > 0 && (Math.abs(currentX-lastX) > 1 || Math.abs(currentY-lastY) > 1)) {
+			$(".messages").text("Letters must be adjacent to form a word!");
+			this.round.currentWord = "";
+			this.endWord();
+		} else if (this.round.currentWordPositions.indexOf(letterLocation) === -1) {
 			this.round.currentWord += e.currentTarget.innerHTML;
 			this.round.currentWordPositions.push(letterLocation);
-			console.log(this.round.currentWord);
 		} else {
 			$(".messages").text("You can only use each tile once in a word.");
 			this.round.currentWord = "";
@@ -90,6 +92,7 @@ Board.prototype.addLetters = function(e) {
 		}
 	}
 }
+
 
 
 module.exports = Board;
