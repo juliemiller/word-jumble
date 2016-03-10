@@ -39,17 +39,21 @@ var Board = function($el, round) {
 	this.$el = $el;
 	this.round = round;
 	this.createGrid();
-	this.gridLetters = {};
 };
 
 Board.prototype.createGrid = function() {
 	$(".row").empty();
 	$(".row").remove();
+	this.gridLetters = {};
 	var $row = $("<ul>").addClass("row");
 	for (var i = 0; i < 4; i ++) {
 		for (var j = 0; j < 4; j ++) {
 			var idx = Math.round(Math.random() * 990);
-			
+			if (this.gridLetters[alphabet[idx]] === undefined) {
+				this.gridLetters[alphabet[idx]] = [[i, j]];
+			} else {
+				this.gridLetters[alphabet[idx]].push([i, j]);
+			}
 			var li = "<li>" + alphabet[idx] + "</li>";
 			var $square = $(li).addClass("square").data("pos", [i, j]);
 			$row.append($square);
