@@ -24,7 +24,7 @@ Round.prototype.endWord = function() {
 	this.makingWord = false;
 	if (this.currentWord.length === 0) {
 	} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
-		$('.messages').text("Words must be at least 3 letters")
+		$('.messages').text("Words must be at least 3 letters long")
 	} else if (Word_List.isInList(this.currentWord)) {
 		if (this.words.indexOf(this.currentWord) === -1) {
 			this.words.push(this.currentWord);
@@ -37,6 +37,7 @@ Round.prototype.endWord = function() {
 	} else {
 		$(".messages").text("Word not in dictionary");
 	}
+	this.currentWord = "";
 }
 
 Round.prototype.creatingWord = function() {

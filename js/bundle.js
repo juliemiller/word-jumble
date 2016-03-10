@@ -85,10 +85,10 @@
 		e.preventDefault();
 	
 		if(this.timer.timing === false) {
-			$("li").empty().removeClass("gameOver");
+			$(".row li").empty().removeClass("gameOver");
 			setTimeout(function(){$(".square").addClass("flip")},0);		
 			this.round.reset();
-			$("li").addClass("playing");
+			$(".row li").addClass("playing");
 			setTimeout(function(){this.board.createGrid()}.bind(this), 1000);
 			this.bindEvents();
 		}
@@ -189,10 +189,10 @@
 		var $timer = $(".timer");
 		if (this.seconds === 60) {
 			var seconds = "Time: 1:00";
-		} else if (this.seconds < 60) {
-			var seconds = "Time: 0:"+ this.seconds;
 		} else if (this.seconds < 10) {
-			var seconds = "Time: 0:0" + this.seconds;
+			var seconds = "Time: 0:0"+ this.seconds;
+		} else if (this.seconds < 60) {
+			var seconds = "Time: 0:" + this.seconds;
 		}
 		$timer.text(seconds);
 	}
@@ -358,7 +358,7 @@
 		this.makingWord = false;
 		if (this.currentWord.length === 0) {
 		} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
-			$('.messages').text("Words must be at least 3 letters")
+			$('.messages').text("Words must be at least 3 letters long")
 		} else if (Word_List.isInList(this.currentWord)) {
 			if (this.words.indexOf(this.currentWord) === -1) {
 				this.words.push(this.currentWord);
@@ -371,6 +371,7 @@
 		} else {
 			$(".messages").text("Word not in dictionary");
 		}
+		this.currentWord = "";
 	}
 	
 	Round.prototype.creatingWord = function() {

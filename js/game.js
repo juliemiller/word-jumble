@@ -26,10 +26,10 @@ Game.prototype.toggleGame = function(e) {
 	e.preventDefault();
 
 	if(this.timer.timing === false) {
-		$("li").empty().removeClass("gameOver");
+		$(".row li").empty().removeClass("gameOver");
 		setTimeout(function(){$(".square").addClass("flip")},0);		
 		this.round.reset();
-		$("li").addClass("playing");
+		$(".row li").addClass("playing");
 		setTimeout(function(){this.board.createGrid()}.bind(this), 1000);
 		this.bindEvents();
 	}

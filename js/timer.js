@@ -54,10 +54,10 @@ Timer.prototype.updateTimer = function() {
 	var $timer = $(".timer");
 	if (this.seconds === 60) {
 		var seconds = "Time: 1:00";
-	} else if (this.seconds < 60) {
-		var seconds = "Time: 0:"+ this.seconds;
 	} else if (this.seconds < 10) {
-		var seconds = "Time: 0:0" + this.seconds;
+		var seconds = "Time: 0:0"+ this.seconds;
+	} else if (this.seconds < 60) {
+		var seconds = "Time: 0:" + this.seconds;
 	}
 	$timer.text(seconds);
 }
