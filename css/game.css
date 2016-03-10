@@ -50,7 +50,7 @@ body {
 	box-sizing: border-box;
 	font-size: 30px;
 	box-shadow: 2px 2px gray;
-	background-color: #F5F5F5;
+	background-color: #;
 }
 
 .flip {
@@ -121,5 +121,5 @@ body {
 }
 
 .wordJumble {
-	background-color: #DEB100;
+	background-color: #FFF9E3;
 }
