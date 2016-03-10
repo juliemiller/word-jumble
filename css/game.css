@@ -1,5 +1,11 @@
-h1 {
+h1, h4 {
 	text-align: center;
+}
+
+body {
+	background-image: url("http://www.eonline.com/eol_images/Entire_Site/201475/rs_560x415-140805131610-1024-scrabble-tiles.ls.8514.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 .outerBar {
@@ -31,6 +37,7 @@ h1 {
 }
 
 .square {
+	color: black;
 	float: left;
 	width: 45px;
 	height: 45px;
@@ -42,27 +49,28 @@ h1 {
 	line-height: 45px;
 	box-sizing: border-box;
 	font-size: 30px;
-	transition: transform 2s;
 	box-shadow: 2px 2px gray;
-
+	background-color: #F5F5F5;
 }
 
 .flip {
-	transform: rotateY(360deg);
+	transform: rotateY(270deg);
+	transition: transform 3s;
 }
 
 .playing:hover {
-	background-color: blue;
+	background-color: #40B1D6;
 }
 
 .selected {
-	background-color: blue;
+	background-color: #40B1D6;
 }
 
 .sideBox {
 	border: 1px solid black;
 	width: 150px;
 	margin: 10px;
+	max-height: 400px;
 }
 
 .sideBox ul {
@@ -85,7 +93,6 @@ h1 {
 
 .messages {
 	width: 240px;
-	border: 1px solid black;
 	text-align: center;
 }
 
@@ -99,5 +106,20 @@ h1 {
 }
 
 .gameOver {
-	background-color: green;
+	background-color: #178F53;
+}
+
+.instructions {
+	display: flex;
+	justify-content: center;
+}
+
+.listInstructions {
+	list-style: none;
+	justify-content: center;
+	width: 400px;
+}
+
+.wordJumble {
+	background-color: #DEB100;
 }

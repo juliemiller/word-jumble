@@ -6,20 +6,29 @@
 	<script src="src/wordList.min.js"></script>
 	<script src="src/wordBank.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/game.css">
-	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,700,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<h1>Word Jumble</h1>
-	<div id="game">
-		<div id="leftBlock">
-			<div class="outerBar">
-				<div id ="navbar"></div>
+	<div class="wordJumble">
+		<h1>Word Jumble</h1>
+		<h4>Make as many words as you can in the grid in the allotted time!</h4>
+		<p class="instructions">Instructions: </br>
+			<p class="instructions">
+				1. Click and drag over adjacent tiles to make a word, release the mouse to end the word</br>
+				2. The longer the word, the more points you get
+			<p>
+		</p>
+		<div id="game">
+			<div id="leftBlock">
+				<div class="outerBar">
+					<div id ="navbar"></div>
+				</div>
+				<div id="board"></div>
+					<div class="messages"></div>
 			</div>
-			<div id="board"></div>
-				<div class="messages"></div>
-		</div>
-		<div id ="words" class="sideBox">
-			<h4>Guessed Words</h4>
+			<div id ="words" class="sideBox">
+				<h4>Guessed Words</h4>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="./js/bundle.js"></script>

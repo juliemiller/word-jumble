@@ -99,6 +99,14 @@ Board.prototype.addLetters = function(e) {
 
 }
 
+Board.prototype.rotateBoard = function() {
+	for (var i = 0; i < 4; i ++) {
+		for (var j = 0; j< 4; j ++) {
+			
+		}
+	}
+}
+
 
 
 module.exports = Board;
