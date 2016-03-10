@@ -1,7 +1,9 @@
 h1, h4 {
 	text-align: center;
 }
-
+* {
+font-family: 'Arvo', serif;
+}
 body {
 	background-image: url("http://www.eonline.com/eol_images/Entire_Site/201475/rs_560x415-140805131610-1024-scrabble-tiles.ls.8514.jpg");
 	background-size: cover;
@@ -14,7 +16,7 @@ body {
 
 #navbar {
 	margin: 10px auto;
-	max-width: 200px;
+	max-width: 240px;
 	display: flex;
 	justify-content: space-between;
 	border: 1px solid black;
@@ -94,15 +96,15 @@ body {
 .messages {
 	width: 240px;
 	text-align: center;
+	min-height: 40px;
+	font-weight: bold;
 }
 
 .timer {
-	width: 50px;
-	border: 1px solid black;
+	width: 150px;
 	height: 100%;
 	margin: 0px;
 	font-size: 20px;
-	text-align: center;
 }
 
 .gameOver {
@@ -122,4 +124,10 @@ body {
 
 .wordJumble {
 	background-color: #FFF9E3;
+}
+
+button {
+	width: 150px;
+  border-radius: 3px;
+  font-size: 14px;
 }

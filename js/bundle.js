@@ -143,8 +143,16 @@
 	}
 	
 	Timer.prototype.display = function() {
-		startButton = "<button>Start</button>"
-		timer = "<span>" + this.seconds +"</span>"
+		startButton = "<button>Start Game</button>"
+		if (this.seconds === 60) {
+			var seconds = "1:00";
+		}
+		if (this.seconds < 60) {
+			var seconds = "0:"+ this.seconds;
+		} else if (this.seconds < 10) {
+			var seconds = "0:0" + this.seconds;
+		}
+		timer = "<span> Time: " + seconds +"</span>"
 		var $timer = $(timer).addClass("timer");
 		var $button = $(startButton).addClass("startButton");
 		this.$el.append($timer);
@@ -154,7 +162,7 @@
 	Timer.prototype.start = function() {
 		this.timing = true;
 		this.interval = setInterval(this.tick.bind(this), 1000)
-		$('.startButton').text("Reset")
+		$('.startButton').text("Reset Game")
 	}
 	
 	Timer.prototype.stop = function() {
@@ -163,7 +171,7 @@
 		clearInterval(this.interval);
 		$(".timer").removeClass("runningOutOfTime")
 		this.seconds = 60;
-		$('.startButton').text("Start")
+		$('.startButton').text("Start Game")
 		this.updateTimer();
 	}
 	
@@ -179,7 +187,14 @@
 	
 	Timer.prototype.updateTimer = function() {
 		var $timer = $(".timer");
-		$timer.text(this.seconds);
+		if (this.seconds === 60) {
+			var seconds = "Time: 1:00";
+		} else if (this.seconds < 60) {
+			var seconds = "Time: 0:"+ this.seconds;
+		} else if (this.seconds < 10) {
+			var seconds = "Time: 0:0" + this.seconds;
+		}
+		$timer.text(seconds);
 	}
 	
 	Timer.prototype.toggleButton = function() {
