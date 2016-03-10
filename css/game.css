@@ -68,6 +68,7 @@ body {
 	font-size: 30px;
 	box-shadow: 2px 2px gray;
 	background-color: #F5F5F5;
+	cursor: pointer;
 }
 
 .flip {
