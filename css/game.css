@@ -1,14 +1,27 @@
-h1, h4 {
+h1 {
+	text-align: center;
+	padding-top: 10px;
+}
+
+h4 {
 	text-align: center;
 }
+
 * {
 font-family: 'Arvo', serif;
 }
+
 body {
 	background-image: url("http://www.eonline.com/eol_images/Entire_Site/201475/rs_560x415-140805131610-1024-scrabble-tiles.ls.8514.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	margin: 0px;
+}
+
+.wordJumble {
+	background-color: #FFF9E3;
+	margin: 0px auto;
+	max-width: 750px;
 }
 
 .outerBar {
@@ -129,12 +142,6 @@ body {
 	list-style: none;
 	justify-content: center;
 	width: 400px;
-}
-
-.wordJumble {
-	background-color: #FFF9E3;
-	margin: 0px auto;
-	max-width: 750px;
 }
 
 button {
