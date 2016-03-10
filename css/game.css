@@ -43,6 +43,8 @@ h1 {
 	box-sizing: border-box;
 	font-size: 30px;
 	transition: transform 2s;
+	box-shadow: 2px 2px gray;
+
 }
 
 .flip {
