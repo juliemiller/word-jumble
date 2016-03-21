@@ -217,8 +217,6 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	// var PrefixTree = require('./prefixTree');
-	// var wordList = require('./prefixes.js');
 	var frequencies = { 
 		"E": 120,
 		"T": 91,
