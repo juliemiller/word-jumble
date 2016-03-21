@@ -10,8 +10,7 @@ var Game = function($el) {
 
 	this.round = new Round($wordList);
 	this.timer = new Timer($timer, this.gameOver.bind(this));
-	this.board = new Board($board, this.round)
-
+	this.board = new Board($board, this.round, this.wordList)
 	this.$el.on("click", ".startButton", this.toggleGame.bind(this));
 }
 
