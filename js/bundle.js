@@ -59,7 +59,7 @@
 
 	var Timer = __webpack_require__(2);
 	var Board = __webpack_require__(3);
-	var Round = __webpack_require__(4);
+	var Round = __webpack_require__(7);
 	
 	var Game = function($el) {
 		this.$el = $el;
@@ -329,7 +329,10 @@
 	module.exports = Board;
 
 /***/ },
-/* 4 */
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */
 /***/ function(module, exports) {
 
 	
