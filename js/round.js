@@ -1,11 +1,11 @@
 
-function Round($el) {
+function Round($el, tree) {
 	this.currentWord = "";
 	this.currentWordPositions = [];
 	this.makingWord = false;
 	this.words = [];
 	this.$el = $el;
-
+	this.tree = tree;
 	this.displayWords();
 }
 
@@ -25,7 +25,7 @@ Round.prototype.endWord = function() {
 	if (this.currentWord.length === 0) {
 	} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
 		$('.messages').text("Words must be at least 3 letters long")
-	} else if (Word_List.isInList(this.currentWord)) {
+	} else if (this.tree.hasWord(this.currentWord)) {
 		if (this.words.indexOf(this.currentWord) === -1) {
 			this.words.push(this.currentWord);
 			$list = $(".list");

@@ -1,6 +1,5 @@
-var PrefixTree = require('./prefixTree');
-var wordList = require('../prefixes.js');
-var words = require('../src/words');
+// var PrefixTree = require('./prefixTree');
+// var wordList = require('./prefixes.js');
 var frequencies = { 
 	"E": 120,
 	"T": 91,
@@ -38,11 +37,10 @@ Object.keys(frequencies).forEach(function(letter) {
 	}
 });
 
-var Board = function($el, round) {
-
+var Board = function($el, round, tree) {
 	this.$el = $el;
 	this.round = round;
-	this.tree = new PrefixTree(wordList);
+	this.tree = tree;
 	this.createGrid();
 };
 

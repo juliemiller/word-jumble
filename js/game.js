@@ -1,6 +1,8 @@
 var Timer = require('./timer.js');
 var Board = require("./board.js");
 var Round = require('./round.js');
+var PrefixTree = require('./prefixTree');
+var wordList = require('./prefixes.js');
 
 var Game = function($el) {
 	this.$el = $el;
@@ -8,9 +10,10 @@ var Game = function($el) {
 	var $board = $("#board");
 	var $wordList = $("#words");
 
-	this.round = new Round($wordList);
+	this.tree = new PrefixTree(wordList);
+	this.round = new Round($wordList, this.tree);
 	this.timer = new Timer($timer, this.gameOver.bind(this));
-	this.board = new Board($board, this.round, this.wordList)
+	this.board = new Board($board, this.round, this.tree)
 	this.$el.on("click", ".startButton", this.toggleGame.bind(this));
 }
 

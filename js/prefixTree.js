@@ -1,17 +1,14 @@
 
 var PrefixTree = function(wordList) {
-	
-	// this.wordList = wordList;
-	this.head = wordList;
-	// this.createTree();
+		this.head = wordList;
 }
 
-// PrefixTree.prototype.createTree = function() {
-// 	for (var i = 0; i < this.wordList.length; i++) {
-// 		var word = this.wordList[i];
-// 		this.add(word);
-// 	};
-// };
+PrefixTree.prototype.createTree = function() {
+	for (var i = 0; i < this.wordList.length; i++) {
+		var word = this.wordList[i];
+		this.add(word);
+	};
+};
 
 PrefixTree.prototype.add = function(word) {
 	var currentNode = this.head;
