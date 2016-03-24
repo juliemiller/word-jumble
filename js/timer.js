@@ -31,7 +31,6 @@ Timer.prototype.start = function() {
 }
 
 Timer.prototype.stop = function() {
-	console.log("STOP TIMER");
 	this.timing = false;
 	this.gameOverCallback();
 	clearInterval(this.interval);
