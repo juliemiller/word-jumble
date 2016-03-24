@@ -58,7 +58,6 @@ Game.prototype.addLetters = function(e) {
 }
 
 Game.prototype.gameOver = function() {
-	console.log("GAME OVER");
 	this.unbindEvents();
 	$(".square").addClass("gameOver");
 	var score = "Game Over! Your Points: " + this.round.calculateScore() + "\n Max Possible Score: " + this.board.calculateScore();

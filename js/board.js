@@ -107,8 +107,6 @@ Board.prototype.solveBoard = function() {
 		}
 	}
 	this.allWords = Object.keys(this.solution);
-	console.log(this.allWords);
-	console.log(this.allWords.length);
 }
 
 Board.prototype.neighbors = function(coord) {
