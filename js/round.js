@@ -16,19 +16,26 @@ Round.prototype.startWord = function() {
 }
 
 Round.prototype.displayWords = function() {
-	var $list = $("<ul>").addClass("list")
+	var $list = $("<ul>").addClass("list");
+	var $list2 = $("<ul>").addClass("list2");
 	this.$el.append($list);
+	this.$el.append($list2);
 }
 
 Round.prototype.endWord = function() {
 	this.makingWord = false;
+
 	if (this.currentWord.length === 0) {
 	} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
 		$('.messages').text("Words must be at least 3 letters long")
 	} else if (this.tree.hasWord(this.currentWord)) {
 		if (this.words.indexOf(this.currentWord) === -1) {
 			this.words.push(this.currentWord);
-			$list = $(".list");
+			if (this.words.length < 20) {
+				$list = $(".list");
+			} else {
+				$list = $(".list2");
+			}
 			var $word = "<li>" + this.currentWord + "</li>";
 			$list.append($word);
 		} else {
@@ -67,6 +74,8 @@ Round.prototype.reset = function() {
 	this.currentWord = "";
 	$(".list").empty();
 	$(".list").remove();
+	$(".list2").empty();
+	$(".list2").remove();
 	this.displayWords();
 	$(".messages").text("");
 }

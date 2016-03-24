@@ -108,6 +108,7 @@ Board.prototype.solveBoard = function() {
 	}
 	this.allWords = Object.keys(this.solution);
 	console.log(this.allWords);
+	console.log(this.allWords.length);
 }
 
 Board.prototype.neighbors = function(coord) {
@@ -144,6 +145,24 @@ Board.prototype.buildPath = function(string_start, path, last_cell) {
 			}
 		}
 	}.bind(this));
+}
+
+Board.prototype.calculateScore = function() {
+	var points = 0;
+	this.allWords.forEach(function(word) {
+		if (word.length <= 4) {
+			points += 1;
+		} else if (word.length === 5) {
+			points += 2
+		} else if (word.length === 6) {
+			points += 3
+		} else if (word.length === 7) {
+			points += 5
+		} else if (word.length > 8) {
+			points += 11;
+		}
+	})
+	return points;
 }
 
 module.exports = Board;

@@ -67,7 +67,7 @@
 		this.$el = $el;
 		var $timer = $("#navbar");
 		var $board = $("#board");
-		var $wordList = $("#words");
+		var $wordList = $("#guessedWords");
 	
 		this.tree = new PrefixTree(wordList);
 		this.round = new Round($wordList, this.tree);
@@ -85,7 +85,10 @@
 	
 	Game.prototype.toggleGame = function(e) {
 		e.preventDefault();
-	
+		$('#solutions1').empty();
+		$('#solutions2').empty();
+		$('#solutions3').empty();
+		$('#solutions4').empty();
 		if(this.timer.timing === false) {
 			$(".row li").empty().removeClass("gameOver");
 			setTimeout(function(){$(".square").addClass("flip")},0);		
@@ -114,10 +117,30 @@
 	}
 	
 	Game.prototype.gameOver = function() {
+		console.log("GAME OVER");
 		this.unbindEvents();
 		$(".square").addClass("gameOver");
-		var score = "Game Over! Total Points: " + this.round.calculateScore();
-		$(".messages").text(score)
+		var score = "Game Over! Your Points: " + this.round.calculateScore() + "\n Max Possible Score: " + this.board.calculateScore();
+		$(".messages").text(score);
+		this.displaySolutions();
+	}
+	
+	Game.prototype.displaySolutions = function() {
+		var i = 1;
+		this.board.allWords.forEach(function(word) {
+			var id = "#solutions" + i;
+			var li = "<li>" + word + "</li>";
+			if (this.round.words.indexOf(word) !== -1) {
+				var classes = "guessed";
+			}
+			$word = $(li).addClass(classes);
+			$(id).append($word);
+			if (i === 4) {
+				i = 1;
+			} else {
+				i += 1;
+			}
+		}.bind(this));
 	}
 	
 	Game.prototype.unbindEvents = function() {
@@ -168,6 +191,7 @@
 	}
 	
 	Timer.prototype.stop = function() {
+		console.log("STOP TIMER");
 		this.timing = false;
 		this.gameOverCallback();
 		clearInterval(this.interval);
@@ -327,6 +351,7 @@
 		}
 		this.allWords = Object.keys(this.solution);
 		console.log(this.allWords);
+		console.log(this.allWords.length);
 	}
 	
 	Board.prototype.neighbors = function(coord) {
@@ -363,6 +388,24 @@
 				}
 			}
 		}.bind(this));
+	}
+	
+	Board.prototype.calculateScore = function() {
+		var points = 0;
+		this.allWords.forEach(function(word) {
+			if (word.length <= 4) {
+				points += 1;
+			} else if (word.length === 5) {
+				points += 2
+			} else if (word.length === 6) {
+				points += 3
+			} else if (word.length === 7) {
+				points += 5
+			} else if (word.length > 8) {
+				points += 11;
+			}
+		})
+		return points;
 	}
 	
 	module.exports = Board;
@@ -450,19 +493,26 @@
 	}
 	
 	Round.prototype.displayWords = function() {
-		var $list = $("<ul>").addClass("list")
+		var $list = $("<ul>").addClass("list");
+		var $list2 = $("<ul>").addClass("list2");
 		this.$el.append($list);
+		this.$el.append($list2);
 	}
 	
 	Round.prototype.endWord = function() {
 		this.makingWord = false;
+	
 		if (this.currentWord.length === 0) {
 		} else if (this.currentWord.length < 3 && this.currentWord.length > 0) {
 			$('.messages').text("Words must be at least 3 letters long")
 		} else if (this.tree.hasWord(this.currentWord)) {
 			if (this.words.indexOf(this.currentWord) === -1) {
 				this.words.push(this.currentWord);
-				$list = $(".list");
+				if (this.words.length < 20) {
+					$list = $(".list");
+				} else {
+					$list = $(".list2");
+				}
 				var $word = "<li>" + this.currentWord + "</li>";
 				$list.append($word);
 			} else {
@@ -501,6 +551,8 @@
 		this.currentWord = "";
 		$(".list").empty();
 		$(".list").remove();
+		$(".list2").empty();
+		$(".list2").remove();
 		this.displayWords();
 		$(".messages").text("");
 	}
