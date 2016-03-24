@@ -35,9 +35,10 @@ Object.keys(frequencies).forEach(function(letter) {
 	}
 });
 
-var Board = function($el, round) {
+var Board = function($el, round, tree) {
 	this.$el = $el;
 	this.round = round;
+	this.tree = tree;
 	this.createGrid();
 };
 
@@ -49,17 +50,16 @@ Board.prototype.createGrid = function() {
 	for (var i = 0; i < 4; i ++) {
 		for (var j = 0; j < 4; j ++) {
 			var idx = Math.round(Math.random() * 990);
-			if (this.gridLetters[alphabet[idx]] === undefined) {
-				this.gridLetters[alphabet[idx]] = [[i, j]];
-			} else {
-				this.gridLetters[alphabet[idx]].push([i, j]);
-			}
+			this.gridLetters[[i,j]] = alphabet[idx];
 			var li = "<li>" + alphabet[idx] + "</li>";
 			var $square = $(li).addClass("square").data("pos", [i, j]);
 			$row.append($square);
 		}
 	}
 	this.$el.append($row);
+	this.solution = {};
+	this.allWords = [];
+	this.solveBoard();
 }
 
 Board.prototype.startWord = function(e) {
@@ -99,14 +99,70 @@ Board.prototype.addLetters = function(e) {
 
 }
 
-Board.prototype.rotateBoard = function() {
-	for (var i = 0; i < 4; i ++) {
-		for (var j = 0; j< 4; j ++) {
-			
+Board.prototype.solveBoard = function() {
+	for (var i = 0; i < 4; i++) {
+		for (var j=0; j < 4; j++) {
+			var path = {};
+			this.buildPath(this.gridLetters[[i,j]], path, [i,j]);
 		}
 	}
+	this.allWords = Object.keys(this.solution);
+	console.log(this.allWords);
+	console.log(this.allWords.length);
 }
 
+Board.prototype.neighbors = function(coord) {
+	var neighbors = [];
+	for (var i = Math.max(coord[0] - 1, 0); i < Math.min(coord[0] + 2, 4); i++) {
+		for (var j = Math.max(coord[1] - 1, 0); j < Math.min(coord[1] + 2, 4); j++) {
+			if (!(i === coord[0] && j === coord[1])){
+				neighbors.push([i,j]);
+			}
+		}
+	}
+	return neighbors;
+}
 
+Board.prototype.buildPath = function(string_start, path, last_cell) {
+	path[last_cell] = true;
+	if (this.tree.hasWord(string_start) && string_start.length > 2) {
+		this.solution[string_start] = true;
+	}
+
+	var neighbors = this.neighbors(last_cell);
+	neighbors.forEach(function(cell) {
+		var alreadySeenIndex = false;
+
+		if (path[cell]) {
+			alreadySeenIndex = true;
+		}
+
+		if (!alreadySeenIndex) {
+			var new_str = string_start + this.gridLetters[cell];
+			if (this.tree.possibleWord(new_str)) {
+				var new_path = Object.assign({}, path);
+				this.buildPath(new_str, new_path, cell);
+			}
+		}
+	}.bind(this));
+}
+
+Board.prototype.calculateScore = function() {
+	var points = 0;
+	this.allWords.forEach(function(word) {
+		if (word.length <= 4) {
+			points += 1;
+		} else if (word.length === 5) {
+			points += 2
+		} else if (word.length === 6) {
+			points += 3
+		} else if (word.length === 7) {
+			points += 5
+		} else if (word.length > 8) {
+			points += 11;
+		}
+	})
+	return points;
+}
 
 module.exports = Board;
